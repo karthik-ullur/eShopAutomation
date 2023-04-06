@@ -37,6 +37,11 @@ namespace eShopAutomation.PageObjects
         [FindsBy(How = How.CssSelector, Using = ".esh-catalog-item")]
         private IList<IWebElement> items;
 
+        [FindsBy(How = How.XPath, Using = "//form[1]/section[1]/div[1]")]
+        private IWebElement username;
+
+        public IWebElement getUserName() { return username; }
+
         public By getHomeScreenDoc() { return homeScreenDoc; }
 
         public IWebElement login()

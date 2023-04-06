@@ -26,7 +26,12 @@ namespace eShopAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div/button[@type='submit']")]
         private IWebElement loginIn;
 
-       public IWebElement getEmailId()
+        [FindsBy(How = How.CssSelector, Using = ".text-danger:nth-child(2)")]
+        private IWebElement errorMessage;
+
+        public IWebElement getErrorMessage() { return  errorMessage; }
+
+        public IWebElement getEmailId()
         {
             return emaliId;
         }

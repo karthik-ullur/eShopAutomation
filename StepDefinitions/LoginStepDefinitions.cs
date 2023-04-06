@@ -9,32 +9,56 @@ namespace eShopAutomation.StepDefinitions
     public sealed class LoginStepDefinitions
     {
         IWebDriver driver;
+        HomePage homePage;
+            LoginPage loginPage;
 
         public LoginStepDefinitions(IWebDriver driver)
         {
             this.driver = driver;
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
-        [Given(@"I navigate to URL")]
+        [Given(@"I navigate to main page")]
         public void GivenINavigateToURL()
         {
             driver.Url = "https://localhost:44315/";
         }
 
-        [When(@"Goto Login page")]
+        [Then(@"Goto Login page")]
         public void WhenGotoLoginPage()
         {
-            HomePage homePage = new HomePage(driver);
+           homePage = new HomePage(driver);
             homePage.login().Click();
         }
 
-        [Then(@"Enter login details '([^']*)' and '([^']*)'")]
+        [When(@"Enter login details '([^']*)' and '([^']*)'")]
         public void ThenEnterLoginDetailsAnd(string username, string password)
         {
-            LoginPage loginPage = new LoginPage(driver);
+             loginPage = new LoginPage(driver);
             loginPage.getEmailId().SendKeys(username);
             loginPage.getPassword().SendKeys(password);
             loginPage.getLoginIn().Click();
         }
+        [Then(@"Check for successful login")]
+        public void ThenCheckForSuccessfulLogin()
+        {
+            homePage = new HomePage(driver);
+            string loggedUserName = homePage.getUserName().Text;
+            if (loggedUserName != "LOGIN")
+            {
+                Console.WriteLine("Login Success");
+            }
+        }
+        [Then(@"check Invalid error message")]
+        public void ThenCheckInvalidErrorMessage()
+        {
+            loginPage = new LoginPage(driver);
+            bool error = loginPage.getErrorMessage().Displayed;
+            if (error == true)
+            {
+                Console.WriteLine("Invalid Input");
+            }
+        }
+
+
     }
 }

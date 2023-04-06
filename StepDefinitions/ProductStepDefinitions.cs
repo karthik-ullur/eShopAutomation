@@ -20,7 +20,7 @@ namespace eShopAutomation.StepDefinitions
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
-        [Given(@"navigate to URL and Login '([^']*)' and '([^']*)'")]
+        [Given(@"navigate to main page and Login '([^']*)' and '([^']*)'")]
         public void GivenNavigateToURLAndLoginAnd(string username, string password)
         {
            driver.Url = "https://localhost:44315/";
@@ -74,7 +74,7 @@ namespace eShopAutomation.StepDefinitions
             CheckOutPage checkOutPage = new CheckOutPage(driver);
             ((IJavaScriptExecutor)driver).ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
             Thread.Sleep(3000);
-            
+
             //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(getFooter()));
             checkOutPage.checkOutBtn().Click();
