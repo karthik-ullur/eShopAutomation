@@ -1,6 +1,5 @@
 ﻿Feature: Login Details
 
-@valid
 Scenario: Valid Login Details
 	Given I navigate to main page
 	Then Goto Login page
@@ -8,7 +7,7 @@ Scenario: Valid Login Details
 	Then Check for successful login
 
 
-@Invalid
+
 Scenario: Invalid Login Details
 Given I navigate to main page
 Then Goto Login page

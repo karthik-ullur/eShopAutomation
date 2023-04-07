@@ -20,54 +20,70 @@ namespace eShopAutomation.StepDefinitions
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
-        [Given(@"navigate to main page and Login '([^']*)' and '([^']*)'")]
-        public void GivenNavigateToURLAndLoginAnd(string username, string password)
+        [Given(@"navigate to main page '([^']*)'")]
+        public void GivenNavigateToMainPage(string uri)
         {
-           driver.Url = "https://localhost:44315/";
+            driver.Url = uri;
+        }
+
+        [When(@"Enter Login details '([^']*)' and '([^']*)'")]
+        public void WhenEnterLoginDetailsAnd(string username, string password)
+        {
+
             HomePage homePage = new HomePage(driver);
             LoginPage loginPage = new LoginPage(driver);
             homePage.login().Click();
-            
+
             //Logging with valid Username and Password
             loginPage.getEmailId().SendKeys(username);
             loginPage.getPassword().SendKeys(password);
             loginPage.getLoginIn().Click();
             string actualTitle = driver.Title;
             string expectedTitle = "Catalog - Microsoft.eShopOnWeb";
-           if (actualTitle != expectedTitle)
+            try
             {
-                Console.WriteLine("Not a valid Page");
-                driver.Close();
+                if (actualTitle != expectedTitle)
+                    throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString()+"Invalid");
             }
         }
 
-
-        [When(@"Filter the Products '([^']*)' and '([^']*)' , select the product and add it to cart")]
-        public void WhenFilterTheProductsAndSelectTheProductAndAddItToCart(string brand, string type)
+        [Then(@"Filter the Products '([^']*)' and '([^']*)'")]
+        public void ThenFilterTheProductsAnd(string brand, string type)
         {
-            string[] expectedProduct = { "ROSLYN RED SHEET"};
+           
             HomePage homePage = new HomePage(driver);
-            CheckOutPage checkOutPage = new CheckOutPage(driver);
             homePage.getBrand().SelectByText(brand);
             homePage.getType().SelectByText(type);
-            homePage.filterButton().Click();
-          
+            homePage.filterButton().Click();   
+        }
+
+
+        [Then(@"select the product and add it to cart")]
+        public void ThenSelectTheProductAndAddItToCart()
+        {
+            string[] expectedProduct = { "ROSLYN RED SHEET" };
+            HomePage homePage = new HomePage(driver);
+            CheckOutPage checkOutPage = new CheckOutPage(driver);
             IList<IWebElement> products = homePage.getItems();
             foreach (IWebElement product in products)
             {
-             
-               driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                if ( expectedProduct.Contains(product.FindElement(homePage.getProductName()).Text))
-                    {
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                if (expectedProduct.Contains(product.FindElement(homePage.getProductName()).Text))
+                {
                     driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                     //Add to cart
                     product.FindElement(homePage.addToCart()).Click();
-                     break;
+                    break;
                 }
             }
         }
 
-       [Then(@"Go to checkout page and select the quantity and checkout")]
+
+        [Then(@"Go to checkout page and select the quantity and checkout")]
         public void ThenGoToCheckoutPageAndSelectTheQuantityAndCheckout()
         {
             // Checking out the product
@@ -101,7 +117,7 @@ namespace eShopAutomation.StepDefinitions
             Assert.AreEqual(expectedMessage, actualMessage);
         }
 
-     //  [Then(@"ordering multiple products")]
+       [Then(@"ordering multiple products")]
         public void ThenOrderingMultipleProducts()
         {
             string[] expectedProducts = { ".NET BOT BLACK SWEATSHIRT", ".NET BLACK & WHITE MUG", "PRISM WHITE T-SHIRT" };
