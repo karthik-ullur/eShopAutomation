@@ -43,9 +43,15 @@ namespace eShopAutomation.StepDefinitions
         {
             homePage = new HomePage(driver);
             string loggedUserName = homePage.getUserName().Text;
-            if (loggedUserName != "LOGIN")
+
+            try
             {
-                Console.WriteLine("Login Success");
+                if (loggedUserName != "LOGIN")
+                    throw new Exception();
+            }
+           catch (Exception ex) 
+            {
+                Console.WriteLine(ex.ToString() + "Logged In");
             }
         }
         [Then(@"check Invalid error message")]
@@ -53,9 +59,14 @@ namespace eShopAutomation.StepDefinitions
         {
             loginPage = new LoginPage(driver);
             bool error = loginPage.getErrorMessage().Displayed;
-            if (error == true)
+            try
             {
-                Console.WriteLine("Invalid Input");
+                if (error == true)
+                    throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString() + "Invalid");
             }
         }
 
