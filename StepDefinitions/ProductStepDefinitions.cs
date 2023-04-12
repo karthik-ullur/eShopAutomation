@@ -26,17 +26,18 @@ namespace eShopAutomation.StepDefinitions
             driver.Url = uri;
         }
 
-        [When(@"Enter Login details '([^']*)' and '([^']*)'")]
-        public void WhenEnterLoginDetailsAnd(string username, string password)
+        [When(@"Enter Login details")]
+        public void WhenEnterLoginDetails(Table table)
         {
+            var dictionary = TableExtensions.ToDictionary(table);
 
             HomePage homePage = new HomePage(driver);
             LoginPage loginPage = new LoginPage(driver);
             homePage.login().Click();
 
             //Logging with valid Username and Password
-            loginPage.getEmailId().SendKeys(username);
-            loginPage.getPassword().SendKeys(password);
+            loginPage.getEmailId().SendKeys(dictionary["Username"]);
+            loginPage.getPassword().SendKeys(dictionary["Password"]);
             loginPage.getLoginIn().Click();
             string actualTitle = driver.Title;
             string expectedTitle = "Catalog - Microsoft.eShopOnWeb";
@@ -47,7 +48,7 @@ namespace eShopAutomation.StepDefinitions
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString()+"Invalid");
+                Console.WriteLine(ex.ToString() + "Invalid");
             }
         }
 

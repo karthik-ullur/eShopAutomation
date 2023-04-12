@@ -103,25 +103,34 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
  testRunner.Given("navigate to main page \'https://localhost:44315/\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Key",
+                            "Value"});
+                table1.AddRow(new string[] {
+                            "Username",
+                            "demouser@microsoft.com"});
+                table1.AddRow(new string[] {
+                            "Password",
+                            "Pass@word1"});
 #line 6
- testRunner.When("Enter Login details \'demouser@microsoft.com\' and \'Pass@word1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 7
- testRunner.Then("Filter the Products \'Other\' and \'All\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 8
- testRunner.Then("select the product and add it to cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 9
- testRunner.Then("Go to checkout page and select the quantity and checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("Enter Login details", ((string)(null)), table1, "When ");
 #line hidden
 #line 10
- testRunner.And("make a payment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("Filter the Products \'Other\' and \'All\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 11
- testRunner.Then("check for order confirmation message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("select the product and add it to cart", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 12
+ testRunner.Then("Go to checkout page and select the quantity and checkout", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 13
+ testRunner.And("make a payment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 14
+ testRunner.Then("check for order confirmation message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 15
  testRunner.And("ordering multiple products", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
